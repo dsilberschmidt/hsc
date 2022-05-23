@@ -40,7 +40,7 @@ contract Inflation is ChainlinkClient {
 
         // Multiply the result by 1000000000000000000 to remove decimals
         int timesAmount = 10**18;
-        request.addInt("times", timesAmount);
+        request.addInt("multiply", timesAmount);
 
         // Sends the request
         return sendChainlinkRequestTo(oracle, request, fee);
