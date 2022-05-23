@@ -24,6 +24,10 @@ contract Inflation is ChainlinkClient {
         oracle = 0x17A8182DBF79427801573A3D75d42eB9B1215DEF;
         jobId = "3bec3d8931614e9aac2eb4a57daaf5ef";
         fee = 0.05 * 10 ** 18;
+
+        //oracle = 0x74EcC8Bdeb76F2C6760eD2dc8A46ca5e581fA656;
+        //jobId = "ca98366cc7314957b8c012c72f05aeeb";
+        //fee = 0.1 * 10 ** 18;
     }
 
     function requestInflationData() public returns(bytes32 requestId) {
