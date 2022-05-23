@@ -1,8 +1,12 @@
 require("@nomiclabs/hardhat-waffle");
+require("@nomiclabs/hardhat-etherscan");
 require("dotenv").config();
 
 module.exports = {
   solidity: "0.8.7",
+  etherscan: {
+    apiKey:process.env.ETHERSCAN_KEY
+  },
   networks: {
     kovan: {
       url: process.env.KOVAN_URL,
