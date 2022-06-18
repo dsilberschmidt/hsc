@@ -3,7 +3,7 @@ require("@nomiclabs/hardhat-etherscan");
 require("dotenv").config();
 
 module.exports = {
-  solidity: "0.8.7",
+  solidity: "0.8.12",
   etherscan: {
     apiKey:process.env.ETHERSCAN_KEY
   },

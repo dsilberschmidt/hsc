@@ -6,7 +6,7 @@ async function main() {
   const url = process.env.KOVAN_URL;
 
   // woah, we just cut out the whole compile.js flow with this!
-  let artifacts = await hre.artifacts.readArtifact("Inflation");
+  let artifacts = await hre.artifacts.readArtifact("InflationEA");
 
   const provider = new ethers.providers.JsonRpcProvider(url);
 
@@ -17,11 +17,11 @@ async function main() {
   // Create an instance of a Faucet Factory
   let factory = new ethers.ContractFactory(artifacts.abi, artifacts.bytecode, wallet);
 
-  let inflation = await factory.deploy();
+  let inflationEA = await factory.deploy();
 
-  console.log("Inflation address:", inflation.address);
+  console.log("InflationEA address:", inflationEA.address);
 
-  await inflation.deployed();
+  await inflationEA.deployed();
 }
 
 main()
