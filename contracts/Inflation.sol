@@ -34,7 +34,7 @@ contract Inflation is ChainlinkClient {
 
         Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
 
-        request.add("get", "https://data.nasdaq.com/api/v3/datasets/RATEINF/INFLATION_USA/data.json?start_date=2020-01-01&api_key=GYBUGS41xf-9zH8fAuyu");
+        request.add("get", "https://data.nasdaq.com/api/v3/datasets/RATEINF/INFLATION_USA/data.json?start_date=2020-01-01&api_key=YOUR_API_KEY");
 
         request.add("path", "dataset_data,data,0,1");
 

@@ -1,14 +1,11 @@
 {
   "name": "hsc",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "Prototype Solidity/Chainlink oracle for accumulated historical U.S. dollar inflation.",
+  "license": "MIT",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "npx hardhat compile"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "hardhat": "^2.9.3"
   },
