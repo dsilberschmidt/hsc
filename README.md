@@ -1,48 +1,48 @@
-# Historical Stable Coin (HSC)
+# Historical Stable Coin
 
-Prototype of a Solidity/Chainlink system designed to bring historical USD inflation data on-chain.
+Historical Stable Coin is a 2022 Web3 prototype exploring how a smart contract could reason about inflation-adjusted value across time rather than only spot prices.
 
-This repository explores a simple idea: if a smart contract can query accumulated inflation from an arbitrary historical start date, it becomes possible to reason more explicitly about inflation-adjusted value, historical purchasing power, and stable-value mechanisms.
+The project originated in the context of a Celo hackathon as the idea of a coin that would preserve purchasing power by tracking accumulated inflation. It later evolved into a Chainlink-based prototype submitted to the **Chainlink Spring 2022 Hackathon** as **“Oracle for an historical stable coin”**.
 
-This project was originally developed and submitted as **“Oracle for an historical stable coin”** in the **Chainlink Spring 2022 Hackathon**.
+## Core idea
 
-## What this repository contains
+Instead of asking only for a current price, the project asks a different question:
 
-This repo includes two related experiments:
+**Can a smart contract query accumulated inflation from an arbitrary historical start date and use that value on-chain?**
 
-- `contracts/Inflation.sol`: a contract that requests U.S. inflation data from Nasdaq Data Link through Chainlink.
-- `contracts/InflationEA.sol`: a contract that requests **accumulated inflation from a configurable historical start date** through a custom external adapter.
+That idea led to two related contract experiments:
 
-The second path is the more important one for the project idea: instead of querying a single inflation datapoint, it computes inflation accumulated since a chosen date and makes that value available on-chain.
+- `contracts/Inflation.sol` — direct Chainlink request to retrieve inflation data from Nasdaq Data Link
+- `contracts/InflationEA.sol` — Chainlink request to a custom external adapter that computes accumulated inflation from a configurable `startDate`
 
-## Main idea
-
-The contract `InflationEA.sol` stores a `startDate` and sends a Chainlink request to an external adapter endpoint.
-
-Example flow:
-
-1. choose a historical start date, such as `2004-01-01`
-2. request accumulated USD inflation from that date onward
-3. receive the result on-chain in `accumulatedInflation`
-
-This was part of a broader exploration around a possible **historical stable coin** or inflation-aware economic logic in Web3.
+The second contract is the more representative one for the project.
 
 ## Architecture
 
-Smart contract (`InflationEA.sol`)
-→ Chainlink request
-→ external adapter
-→ Nasdaq inflation dataset
-→ accumulated inflation calculation
-→ result returned on-chain
+`InflationEA.sol` follows this flow:
 
-## Repository structure
+smart contract → Chainlink request → external adapter → historical inflation dataset → accumulated inflation calculation → result stored on-chain
 
-- `contracts/Inflation.sol` — direct Chainlink request for inflation data
-- `contracts/InflationEA.sol` — Chainlink + external adapter version
-- `scripts/` — deployment scripts for the prototype
-- `test/` — currently incomplete and still contains sample Hardhat material
-- `ExternalAdapterInflation` — separate repository for the custom external adapter used by this prototype
+The contract keeps a configurable historical date such as `2004-01-01`, sends that date to the adapter, and receives a cumulative inflation value in `accumulatedInflation`.
+
+## Repository contents
+
+- `contracts/Inflation.sol` — direct inflation-data request contract
+- `contracts/InflationEA.sol` — accumulated-inflation contract using an external adapter
+- `scripts/deploy.js` — deployment script kept as part of the original prototype
+- `data` — sample dataset response used during development
+- `hardhat.config.js` — historical Hardhat/Kovan configuration
+- `package.json` — minimal project metadata and compile script
+
+## Related repository
+
+The companion external adapter lives here:
+
+- `ExternalAdapterInflation`: https://github.com/dsilberschmidt/ExternalAdapterInflation
+
+## Public submission
+
+- Devpost: https://devpost.com/software/oracle-for-an-historical-stable-coin
 
 ## Tech stack
 
@@ -51,51 +51,37 @@ Smart contract (`InflationEA.sol`)
 - Chainlink
 - JavaScript / Node.js
 - Nasdaq Data Link
-- Heroku (historical deployment used in the prototype)
+- Heroku
 
-## Historical context
+## Current state
 
-This project was built in an earlier Chainlink/Kovan-era setup.
+This repository has been cleaned to preserve the actual project logic and remove Hardhat boilerplate.
 
-Because of that, some implementation details are now historical rather than production-ready, including:
+It currently:
+- keeps only the contracts and scripts relevant to the project
+- compiles successfully in its present form
+- preserves the original Kovan-era setup as historical context
 
+It does **not** represent a current production deployment.
+
+Some parts depend on infrastructure and assumptions from 2022, including:
 - Kovan-specific configuration
-- legacy oracle/job setup
-- a Heroku endpoint used by the adapter flow
+- legacy Chainlink oracle/job setup
+- an external adapter flow tied to a historical Heroku deployment
+- a data source path that is currently not reliably accessible from the present environment
 
-So this repository should be read as a **prototype / research artifact**, not as a current production deployment.
+## Why it matters
 
-## Why it is interesting
+Even as a prototype, the project captures a useful design direction for Web3:
 
-Even in prototype form, the project captures a useful design direction:
+- bringing macroeconomic historical data on-chain
+- computing accumulated inflation rather than a single datapoint
+- exploring monetary logic aimed at preserving purchasing power across time
 
-- connecting off-chain macroeconomic data to smart contracts
-- computing historical accumulated inflation instead of reading only a spot value
-- experimenting with inflation-aware economic primitives in Web3
+## Historical note
 
-## Current status
-
-This repository is preserved as a technical prototype.
-
-It still needs cleanup to become a polished public demo, especially:
-
-- removal of leftover Hardhat sample files
-- proper tests for the inflation contracts
-- fuller documentation of the adapter flow
-- migration to current networks and tooling
-
-## Related repository
-
-The external adapter used by this project lives in a separate repository:
-
-- `ExternalAdapterInflation`: https://github.com/dsilberschmidt/ExternalAdapterInflation
-
-## Hackathon submission
-
-Public submission page:
-
-- https://devpost.com/software/oracle-for-an-historical-stable-coin
+This project is best understood as an early prototype and conceptual artifact from 2022 rather than a maintained product. Its value today is mainly as a documented technical experiment and as the seed of the broader Historical Stable Coin idea.
 
 ## Author
 
-Daniel Silberschmidt
+dsilberschmidt
