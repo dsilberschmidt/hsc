@@ -29,7 +29,7 @@ contract InflationEA is ChainlinkClient, ConfirmedOwner {
             address(this),
             this.fulfillValue.selector
         );
-        req.add("post", "https://YOUR_ADAPTER_URL");
+        req.add("post", "https://external-adapter-inflation.onrender.com");
         req.add(
             "requestData",
             //'{"id": 0, "data": { "start_date": "2004-01-01"}}'
