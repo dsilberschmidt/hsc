@@ -29,14 +29,14 @@ contract InflationEA is ChainlinkClient, ConfirmedOwner {
             address(this),
             this.fulfillValue.selector
         );
-        req.add("post", "https://evening-forest-80004.herokuapp.com");
+        req.add("post", "https://YOUR_ADAPTER_URL");
         req.add(
             "requestData",
             //'{"id": 0, "data": { "start_date": "2004-01-01"}}'
             s3
         );
         req.add("path", "data,result");
-        req.addInt("multiply", 1000); // converts float 1.4914820114715215 into integer 1491
+        req.addInt("multiply", 1000); // converts returned factor into an integer-like on-chain value
         return sendChainlinkRequest(req, ORACLE_PAYMENT);
     }
 
