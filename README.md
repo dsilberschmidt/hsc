@@ -85,3 +85,7 @@ This project is best understood as an early prototype and conceptual artifact fr
 ## Author
 
 dsilberschmidt
+
+## Sepolia deployment
+
+- InflationEA: `0x1f49F011C08AcCeD9Eea56B029FC00F194e7AE29`
