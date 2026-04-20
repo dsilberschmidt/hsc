@@ -3,7 +3,7 @@ require('dotenv').config();
 
 async function main() {
 
-  const url = process.env.KOVAN_URL;
+  const url = process.env.SEPOLIA_URL;
 
   // woah, we just cut out the whole compile.js flow with this!
   let artifacts = await hre.artifacts.readArtifact("InflationEA");
