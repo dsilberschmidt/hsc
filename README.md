@@ -12,7 +12,7 @@ Instead of asking only for a current price, the project asks a different questio
 
 That idea led to two related contract experiments:
 
-- `contracts/Inflation.sol` — direct Chainlink request to retrieve inflation data from Nasdaq Data Link
+- `contracts/Inflation.sol` — direct Chainlink request to retrieve inflation data from the original prototype path
 - `contracts/InflationEA.sol` — Chainlink request to a custom external adapter that computes accumulated inflation from a configurable `startDate`
 
 The second contract is the more representative one for the project.
@@ -21,7 +21,7 @@ The second contract is the more representative one for the project.
 
 `InflationEA.sol` follows this flow:
 
-smart contract → Chainlink request → external adapter → historical inflation dataset → accumulated inflation calculation → result stored on-chain
+smart contract → Chainlink request → external adapter → inflation source → accumulated inflation calculation → result stored on-chain
 
 The contract keeps a configurable historical date such as `2004-01-01`, sends that date to the adapter, and receives a cumulative inflation value in `accumulatedInflation`.
 
@@ -29,9 +29,9 @@ The contract keeps a configurable historical date such as `2004-01-01`, sends th
 
 - `contracts/Inflation.sol` — direct inflation-data request contract
 - `contracts/InflationEA.sol` — accumulated-inflation contract using an external adapter
-- `scripts/deploy.js` — deployment script kept as part of the original prototype
+- `scripts/deploy.js` — deployment script kept as part of the prototype
 - `data` — sample dataset response used during development
-- `hardhat.config.js` — historical Hardhat/Kovan configuration
+- `hardhat.config.js` — deployment / verification configuration
 - `package.json` — minimal project metadata and compile script
 
 ## Related repository
@@ -50,8 +50,8 @@ The companion external adapter lives here:
 - Hardhat
 - Chainlink
 - JavaScript / Node.js
-- Nasdaq Data Link
-- Heroku
+- Sepolia
+- Render
 
 ## Current state
 
@@ -59,16 +59,15 @@ This repository has been cleaned to preserve the actual project logic and remove
 
 It currently:
 - keeps only the contracts and scripts relevant to the project
-- compiles successfully in its present form
-- preserves the original Kovan-era setup as historical context
+- compiles successfully
+- points `InflationEA.sol` to a live external adapter deployment
+- includes a Sepolia deployment of `InflationEA`
+- includes a verified Sepolia contract
+- has real on-chain read and write interactions already tested
 
 It does **not** represent a current production deployment.
 
-Some parts depend on infrastructure and assumptions from 2022, including:
-- Kovan-specific configuration
-- legacy Chainlink oracle/job setup
-- an external adapter flow tied to a historical Heroku deployment
-- a data source path that is currently not reliably accessible from the present environment
+The original Chainlink oracle/job flow used by the 2022 prototype remains historically relevant, but is not yet fully migrated to a current Sepolia Chainlink request/fulfillment setup.
 
 ## Why it matters
 
@@ -82,10 +81,20 @@ Even as a prototype, the project captures a useful design direction for Web3:
 
 This project is best understood as an early prototype and conceptual artifact from 2022 rather than a maintained product. Its value today is mainly as a documented technical experiment and as the seed of the broader Historical Stable Coin idea.
 
+Historically, earlier versions of the project used:
+- Kovan-era Chainlink configuration
+- legacy oracle/job setup
+- Nasdaq Data Link
+- Heroku deployment paths
+
+Those elements belong to the original prototype history and should not be read as the current live setup.
+
 ## Author
 
 dsilberschmidt
 
-## Sepolia deployment
+## Live endpoints
 
-- InflationEA: `0x1f49F011C08AcCeD9Eea56B029FC00F194e7AE29`
+- External adapter (Render): `https://external-adapter-inflation.onrender.com`
+- Sepolia `InflationEA`: `0x1f49F011C08AcCeD9Eea56B029FC00F194e7AE29`
+- Sepolia Etherscan: `https://sepolia.etherscan.io/address/0x1f49F011C08AcCeD9Eea56B029FC00F194e7AE29#code`
